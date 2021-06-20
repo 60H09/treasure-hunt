@@ -1,0 +1,18 @@
+body{
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ), url('https://cdn.hipwallpaper.com/i/82/90/w9lzc1.jpg');
+
+ color: azure;
+
+}
+
+.things{
+  text-align: center;
+  margin-top:20%;
+  border: 7px solid white;
+  width:35%;
+  margin-left: 35%;
+  padding:10px 10px 10px 10px;
+}

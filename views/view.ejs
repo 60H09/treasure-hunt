@@ -1,0 +1,34 @@
+<%-include("header")-%>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col"><a href="/">number</a></th> 
+        <th scope="col"><a href="/34ec78fcc91ffb1e54cd85e4a0924332">question</a></th>
+        <th scope="col"><a href="/treasure">answer</a></th>
+        <th scope="col"><a href="">photo</a></th>
+      </tr>
+    </thead>
+  <%things.forEach(function(thing,index){ %>
+    <tbody>
+        <tr>
+          <th scope="row"><%=index+1%></th>
+          <td><%=thing.text%></td>
+          <td><%=thing.answer%></td>   
+          <% if (thing.format==1) { %>
+            <td><iframe width="560" style ="height:100px;width:100px" height="315" src="https://www.youtube.com/embed/<%=thing.photo.slice(32,thing.photo.length)%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+              <%} else { %>
+              <td><img src="<%=thing.photo%>" alt="" style ="height:100px;width:100px"></td>
+              <% } %>
+          <td><form action="/delete" method="post" ><button type="submit" name="delete" value="<%=thing.id%>" class="btn btn-danger" style="margin-left:45%;">DELETE</button>
+          </form></td>
+        </tr>
+    </tbody>
+  <%})%>
+    
+  </table>
+
+
+
+
+<%-include("footer")-%>
