@@ -1,14 +1,48 @@
 <%-include("header")-%>
-
+<div class="mother">
     <div class="things">
-      <div><h1><%=text%></h1></div>
+      
+      <% if (feedback==1) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Holy guacamole!</strong> You fuckn cracked it.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="outline: none;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            $('.alert').alert()
+          })
+        </script>
+        <% }else if (feedback==0) { %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Sorry!</strong> Try again.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="outline: none;">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+          <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              $('.alert').alert()
+            })
+          </script>
+          <% } %>
+
+          <div><h1><%=text%></h1></div>
       <% if (format==1) { %>
         <td><iframe width="560"  height="315" src="https://www.youtube.com/embed/<%=photo.slice(32,photo.length)%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
           <%} else { %>
-          <td><img src="<%=photo%>" alt="" ></td>
-          <% } %>      <form action="/question/post/<%=code%>" method="post">
+          <td><img src="<%=photo%>" alt="" style="height:400px;width:500px" ></td>
+          <% } %>      
+          <form action="/" method="post">
         <input type="text" name="answer">
         <button type="submit" >submit</button>
+          
     </form>
+    </div>
     </div>
 <%-include("footer")-%>

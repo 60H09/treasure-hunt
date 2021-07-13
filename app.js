@@ -52,10 +52,12 @@ app.post("/delete",function(req, res){
     })
 
 var score = 0
+var feedback=-1
     app.get("/",function(req, res){
-Question.find({},function(err,results){
+    
+    Question.find({},function(err,results){
     if(score!=results.length){
-      res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format})
+      res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback})
     }
     else{
         res.render("vali",{message:"your treasure",link:"/treasure"})
@@ -66,12 +68,14 @@ Question.find({},function(err,results){
     app.post("/",function(req, res){
         Question.find({},function(err,results){
         if(req.body.answer===results[score].answer){
-            console.log("yay")
+            feedback =1
             score+=1
-            res.render("vali",{message:"Good Job",link:"/"})
-        }
+            res.redirect("/")     
+       }
+    
         else{
-            res.render("vali",{message:"Try Again",link:"/"})
+            feedback =0
+            res.redirect("/")     
 
         
     }
