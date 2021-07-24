@@ -46,7 +46,7 @@ passport.deserializeUser(function(id, done) {
 
 
 app.get("/create-new-account", function(req, res) {
-    res.render("createacc",{place:"create-new-account"})
+  res.render("createacc",{place:"create-new-account",comment:"Have an account??",link:"/login"})
 })
 app.post("/create-new-account", function(req, res) {
     User.register({username: req.body.username}, req.body.password, function(err, user){
@@ -62,7 +62,7 @@ app.post("/create-new-account", function(req, res) {
 })
 
 app.get("/login",function(req,res){
-    res.render("createacc",{place:"login"})
+  res.render("createacc",{place:"login",comment:"Don't have an account??",link:"/create-new-account"})
 })
 app.post("/login", function(req, res){
 
@@ -85,10 +85,10 @@ app.post("/login", function(req, res){
 
 app.get("/add/",function(req, res){
     if(req.isAuthenticated()){
-        res.render("add",{name:req.user.username})
+        res.render("add",{name:req.user.username,gameid:req.user.id})
     }
     else{
-        res.render("createacc",{place:"login"})
+      res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
     }
     
 })
@@ -105,11 +105,11 @@ app.post("/add",function(req, res){
 app.get("/add/view",function(req, res){
     if(req.isAuthenticated()){
     User.findOne({_id:req.user.id},function(err,found){
-        res.render("view",{things:found.question,name:req.user.username})
+        res.render("view",{things:found.question,name:req.user.username,gameid:req.user.id})
     })
 }
 else{
-    res.render("createacc",{place:"login"})
+  res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
 }
 })
 
@@ -145,13 +145,11 @@ var feedback=-1
        var results = result.question
         if(req.body.answer===results[score].answer){
             feedback =1
-            console.log("right")
             score+=1
             res.redirect("/play/"+req.params.gameid)     
        }
     
         else{
-            console.log("wrong answer")
             feedback =0
             res.redirect("/play/"+req.params.gameid)     
     }
@@ -178,6 +176,11 @@ app.get("/nohint",function(req, res){
 app.get("/treasure",function(req, res){
     res.render("treasure")
 })
+
+app.get("/logout", function(req, res){
+    req.logout();
+    res.redirect("/");
+  });
 
 app.listen(3000, function(){
     console.log("listening")
