@@ -1,10 +1,10 @@
 <%-include("header")-%>
 <div class="mother">
     <div class="things">
-      
+      <div id="status" target="_blank" rel="noopener noreferrer">   </div>
       <% if (feedback==1) { %>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Holy guacamole!</strong> You fuckn cracked it.
+          <strong>Holy guacamole!</strong> You fuckn cracked it on
           <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="outline: none;">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -17,7 +17,7 @@
           })
         </script>
         <% }else if (feedback==0) { %>
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <strong>Sorry!</strong> Try again.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="outline: none;">
               <span aria-hidden="true">&times;</span>
@@ -37,12 +37,39 @@
         <td><iframe width="560"  height="315" src="https://www.youtube.com/embed/<%=photo.slice(32,photo.length)%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
           <%} else { %>
           <td><img src="<%=photo%>" alt="" style="height:400px;width:500px" ></td>
-          <% } %>      
-          <form action="/" method="post">
+          <% } %> 
+          
+          
+
+
+
+          
+          <form action="/play/<%=id%>" method="post">
         <input type="text" name="answer">
         <button type="submit" >submit</button>
           
     </form>
     </div>
     </div>
+
+  <script>
+    function countDown(sec, elem,thing) {
+  var intervalId = undefined;
+  var intervalId = setInterval(function(){ 
+    var element = document.getElementById(elem);
+    element.innerHTML = "Time left: " + Math.round(sec/60) + " minutes and "+sec%60+ " seconds left until the next hint" ;
+    
+    if (sec < 1) {
+      clearInterval(intervalId);
+      element.innerHTML = thing
+    }
+
+    sec--;
+  }, 1000);
+  
+}
+countDown(18, "status",'<a href="<%=hint1%>" target="_blank" rel="noopener noreferrer">hint</a><div id="nest"></div>');
+countDown(18, "nest",'<a href="<%=hint2%>" target="_blank" rel="noopener noreferrer">hint</a>');
+  </script>
+
 <%-include("footer")-%>

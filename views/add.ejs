@@ -1,15 +1,19 @@
 <%-include("header")-%>
 <div class="mother">
-    <div class="things question">
-      
-      <form action="/34ec78fcc91ffb1e54cd85e4a0924332" method="post">
+    <div class="things">
+      <div class="inside">
+      <form action="/add" method="post">
         <li>
         <ul><label for="">question</label><input type="text" name="text"></ul> 
-        <ul><label for="">link</label><input type="text" name="photo"></ul>
-        <ul><label for="">answer</label><input type="text" name="answer"></ul>
+        <ul><label for="">link    </label><input type="text" name="photo"></ul>
+        <ul><label for="">answer  </label><input type="text" name="answer"></ul>
+        <ul><label for="">hint1  </label><input type="text" name="hint1"></ul>
+        <ul><label for="">hint2  </label><input type="text" name="hint2"></ul>
+
         <form action="">
           <ul><label for="age1">video</label><input type="radio" id="age1" name="age" value="1"></ul>
           <ul><label for="age2">image</label><input type="radio" id="age2" name="age" value="0"></ul>
+          <ul><label for="age3">link</label><input type="radio" id="age3" name="age" value="2"></ul>
           <ul><button type="submit" >add</button></ul>
 
           <p>if you have google drive link generate a link by clicking <a href="https://www.wonderplugin.com/online-tools/google-drive-direct-link-generator/" target="_blank" rel="noopener noreferrer">here</a> </p>
@@ -19,5 +23,6 @@
       </li>
     </div>
   </div>
+</div>
 
 </body>
