@@ -85,7 +85,7 @@ app.post("/login", function(req, res){
 
 app.get("/add/",function(req, res){
     if(req.isAuthenticated()){
-        res.render("add")
+        res.render("add",{name:req.user.username})
     }
     else{
         res.render("createacc",{place:"login"})
@@ -105,7 +105,7 @@ app.post("/add",function(req, res){
 app.get("/add/view",function(req, res){
     if(req.isAuthenticated()){
     User.findOne({_id:req.user.id},function(err,found){
-        res.render("view",{things:found.question})
+        res.render("view",{things:found.question,name:req.user.username})
     })
 }
 else{
