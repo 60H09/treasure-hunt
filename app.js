@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 var session = require('express-session')
 var passport = require("passport");
 var passportLocalMongoose = require("passport-local-mongoose");
-mongoose.connect("mongodb://localhost:27017/questionDB", { useUnifiedTopology: true , useNewUrlParser: true }) //mongoose connecting
+mongoose.connect("mongodb://localhost:27017/questionDB", { useUnifiedTopology: true , useNewUrlParser: true, useFindAndModify: false  }) //mongoose connecting
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set('views', './views');
@@ -117,7 +117,7 @@ else{
 
 app.post("/delete",function(req, res){
     var delID=req.body.delete
-    User.findOneAndUpdate({username:req.user.username},{$pull:{items:{_id:delID}}},function(err,result){
+    User.findOneAndUpdate({_id:req.user.id},{$pull:{question:{_id:delID}}},function(err,result){
         if(!err){
           res.redirect("/add/view")
         }
