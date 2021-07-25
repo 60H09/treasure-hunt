@@ -23,11 +23,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session())
 
+const playerSchema = new mongoose.Schema({name:String,result:Number})
+const Player = mongoose.model('Player', playerSchema)
 
 const questionSchema =new mongoose.Schema({text:String,photo:String,answer:String,format:String,hint1:{type:String,default:"/nohint"},hint2:String})
 const Question = mongoose.model('Question',questionSchema)
 
-const userSchema = new mongoose.Schema({username:String,password:String,question:[questionSchema]})
+const userSchema = new mongoose.Schema({username:String,password:String,question:[questionSchema],player:[playerSchema]})
+
 userSchema.plugin(passportLocalMongoose)
 const User = mongoose.model('User',userSchema)
 passport.use(User.createStrategy());
@@ -161,14 +164,29 @@ app.get("/",function(req,res){
 })
 
 app.post("/",function(req,res){
-    adminName=req.body.adminName
+    var adminName=req.body.adminName
     User.findOne({username:adminName},function(err,found){
+      if(!found){
+        res.render("vali",{message :"Game not found",link:"/"},)
+      }
+      else{
        let adminID=found.id
-       res.redirect("/play/"+adminID)
+       res.redirect("/register/"+adminID)}
     })
 })
 
-
+app.get("/register/:gameid",function(req,res){
+  res.render("register",{id:req.params.gameid})
+})
+app.post("/register/:gameid",function(req,res){
+  const player = new Player({name:req.body.playerName})
+  User.findById(req.params.gameid,function(err,result){
+       result.player.push(player)
+       result.save(
+       res.redirect("/play/"+req.params.gameid)
+       )
+  })
+})
 
 app.get("/nohint",function(req, res){
     res.render("nohint")
@@ -185,6 +203,3 @@ app.get("/logout", function(req, res){
 app.listen(3000, function(){
     console.log("listening")
 })
-
-
-
