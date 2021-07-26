@@ -52,7 +52,9 @@ app.get("/create-new-account", function(req, res) {
   res.render("createacc",{place:"create-new-account",comment:"Have an account??",link:"/login"})
 })
 app.post("/create-new-account", function(req, res) {
-    User.register({username: req.body.username}, req.body.password, function(err, user){
+  User.findOne({username:req.body.username},function(err,found){
+    if(!found){
+      User.register({username: req.body.username}, req.body.password, function(err, user){
         if (err) {
           console.log(err);
           res.redirect("/create-new-account");
@@ -62,6 +64,12 @@ app.post("/create-new-account", function(req, res) {
           });
         }
       });
+    }
+    else{
+      res.render("vali",{message:"That name already exists try a diffrent one",link:"/create-new-account"})
+    }
+  })
+    
 })
 
 app.get("/login",function(req,res){
@@ -130,12 +138,11 @@ app.post("/delete",function(req, res){
 var score = 0
 var feedback=-1
     app.get("/play/:gameid",function(req, res){
-    console.log(score)
     User.findById(req.params.gameid,function(err,result){
     var results = result.question
     console.log(results.length)
     if(score!=results.length){
-      res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid})
+      res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid,name:result.username})
     }
     else{
         res.render("vali",{message:"Congrats Claim your treasure",link:"/treasure"})

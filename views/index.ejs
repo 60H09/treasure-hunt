@@ -1,4 +1,68 @@
-<%-include("header")-%>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>list</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+        body{
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ), url('https://cdn.hipwallpaper.com/i/82/90/w9lzc1.jpg');
+
+ color: azure;
+
+}
+
+.things{
+  color: #fff;
+  text-align: center;
+  height:600px;
+  width:800px;
+  border: 1px solid #000;
+}
+footer {
+	position: fixed;
+	text-align: center;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	background-color: #000;
+}
+li{
+  list-style-type: none;
+}
+.mother{
+  align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.treasure{
+  align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+    </style>
+</head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">THUNT</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">login</a>
+          </li>
+        </ul>
+        
+      </div>
+      <h6><%=name%>'s game</h6>
+    </nav>
 <div class="mother">
     <div class="things">
       <div id="status" target="_blank" rel="noopener noreferrer">   </div>
