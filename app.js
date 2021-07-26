@@ -140,7 +140,6 @@ var feedback=-1
     app.get("/play/:gameid",function(req, res){
     User.findById(req.params.gameid,function(err,result){
     var results = result.question
-    console.log(results.length)
     if(score!=results.length){
       res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid,name:result.username})
     }
@@ -206,6 +205,21 @@ app.get("/logout", function(req, res){
     req.logout();
     res.redirect("/");
   });
+
+/*app.get("/view-people",function(req, res){
+  if(req.isAuthenticated()){
+  User.findOne({_id:req.user.id},function(err,found){
+    res.render("view",{things:found.player,name:req.user.username,gameid:req.user.id})
+    })
+}
+else{
+  res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
+}
+})*/
+
+app.use(function(req,res){
+  res.status(404).render('what');
+});
 
 app.listen(3000, function(){
     console.log("listening")
