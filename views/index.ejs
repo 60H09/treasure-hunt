@@ -97,13 +97,14 @@ li{
           <% } %>
 
           <div><h1><%=text%></h1></div>
-      <% if (format==1) { %>
-        <td><iframe width="560"  height="315" src="https://www.youtube.com/embed/<%=photo.slice(32,photo.length)%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
-          <%} else { %>
-          <td><img src="<%=photo%>" alt="" style="height:400px;width:500px" ></td>
-          <% } %> 
-          
-          
+      
+          <% if (format == 1) { %>
+            <td><iframe width="560"  height="315" src="https://www.youtube.com/embed/<%=photo.slice(32,photo.length)%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
+            <% } else if (format == 0) { %>
+              <td><img src="<%=photo%>" alt="" style="height:400px;width:500px" ></td>
+        <% } else { %>
+          <td><a href="<%=photo%>" target="_blank" rel="noopener noreferrer">Q</a></td>  
+        <% } %>
 
 
 

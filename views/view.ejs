@@ -92,9 +92,12 @@ li{
               <% } %> 
           <% if (thing.format==1) { %>
             <td><iframe width="560" style ="height:100px;width:100px" height="315" src="https://www.youtube.com/embed/<%=thing.photo.slice(32,thing.photo.length)%>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
-              <%} else { %>
+              <%} else if(thing.format==0) { %>
               <td><img src="<%=thing.photo%>" alt="" style ="height:100px;width:100px"></td>
-              <% } %>
+              <% }else{ %>
+                <td><a href="<%=thing.photo%>">Q</a></td>
+                <% }%>
+
           <td><form action="/delete" method="post" ><button type="submit" name="delete" value="<%=thing.id%>" class="btn btn-danger" style="margin-left:45%;">DELETE</button>
           </form></td>
         </tr>
