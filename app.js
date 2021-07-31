@@ -23,7 +23,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session())
 
-const playerSchema = new mongoose.Schema({name:String,result:Number})
+const playerSchema = new mongoose.Schema({name:String,score:{type:Number,default:0}})
 const Player = mongoose.model('Player', playerSchema)
 
 const questionSchema =new mongoose.Schema({text:String,photo:String,answer:String,format:String,hint1:{type:String,default:"/nohint"},hint2:String})
@@ -135,33 +135,47 @@ app.post("/delete",function(req, res){
       })
     })
 
-var score = 0
+
 var feedback=-1
-    app.get("/play/:gameid",function(req, res){
+    app.get("/play/:gameid/:playerName",function(req, res){
     User.findById(req.params.gameid,function(err,result){
-    var results = result.question
-    if(score!=results.length){
-      res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid,name:result.username})
-    }
-    else{
-        res.render("vali",{message:"Congrats Claim your treasure",link:"/treasure"})
-        score = 0
-    }
+      for(var i=0;i<result.player.length;i++){
+       if (result.player[i].name==req.params.playerName){
+        var score = result.player[i].score
+        var results = result.question
+        if(score!=results.length){
+          res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid,name:result.username,playerName:req.params.playerName})
+        }
+        else{
+            res.render("vali",{message:"Congrats Claim your treasure",link:"/treasure"})
+        }
+      }
+      }
+
     })
 })
-    app.post("/play/:gameid",function(req, res){
+    app.post("/play/:gameid/:playerName",function(req, res){
         User.findById(req.params.gameid,function(err,result){
-       var results = result.question
-        if(req.body.answer===results[score].answer){
-            feedback =1
-            score+=1
-            res.redirect("/play/"+req.params.gameid)     
-       }
-    
-        else{
-            feedback =0
-            res.redirect("/play/"+req.params.gameid)     
-    }
+          for(var i=0;i<result.player.length;i++){
+            if (result.player[i].name==req.params.playerName){
+              var score = result.player[i].score
+              console.log(score)
+              var results = result.question
+              if(req.body.answer===results[score].answer){
+                  feedback =1
+                  score+=1
+                  result.player[i].score=score
+                  result.save()
+                  res.redirect("/play/"+req.params.gameid+"/"+req.params.playerName)     
+             }
+          
+              else{
+                  feedback =0
+                  res.redirect("/play/"+req.params.gameid+"/"+req.params.playerName)     
+          }
+            }
+          }
+          
     })
 })
 
@@ -185,12 +199,22 @@ app.get("/register/:gameid",function(req,res){
   res.render("register",{id:req.params.gameid})
 })
 app.post("/register/:gameid",function(req,res){
+  var status = 1;
   const player = new Player({name:req.body.playerName})
   User.findById(req.params.gameid,function(err,result){
-       result.player.push(player)
-       result.save(
-       res.redirect("/play/"+req.params.gameid)
-       )
+      for(var i=0;i<result.player.length;i++){
+        if(result.player[i].name==req.body.playerName){
+          status=0;
+        }
+      }
+      if(status===1){
+      result.player.push(player)
+      result.save()
+      res.redirect("/play/"+req.params.gameid+"/"+req.body.playerName)      }
+      else{
+        res.render("vali",{message:"that name exists try a diffrent one",link:"/register/"+req.params.gameid})
+      }
+       
   })
 })
 
@@ -206,16 +230,25 @@ app.get("/logout", function(req, res){
     res.redirect("/");
   });
 
-/*app.get("/view-people",function(req, res){
+app.get("/view-people",function(req, res){
   if(req.isAuthenticated()){
   User.findOne({_id:req.user.id},function(err,found){
-    res.render("view",{things:found.player,name:req.user.username,gameid:req.user.id})
+    res.render("viewPeople",{things:found.player,name:req.user.username,gameid:req.user.id})
     })
 }
 else{
   res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
 }
-})*/
+})
+
+app.post("/delete/people",function(req, res){
+  var delID=req.body.delete
+  User.findOneAndUpdate({_id:req.user.id},{$pull:{player:{_id:delID}}},function(err,result){
+      if(!err){
+        res.redirect("/view-people")
+      }
+    })
+  })
 
 app.use(function(req,res){
   res.status(404).render('what');

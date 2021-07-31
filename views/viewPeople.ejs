@@ -56,8 +56,43 @@ li{
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="/login">login</a>
+            <a class="nav-link" href="/add">Add</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/add/view">view</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="/logout">logout</a>
           </li>
         </ul>
       </div>
+
+      <a href="/play/<%=gameid%>">Hello <%=name%></a>
     </nav>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <%things.forEach(function(thing,index){ %>
+            <tbody>
+                <tr>
+                  <th scope="row"><%=index+1%></th>
+                  <td><%=thing.name%></td>
+                  <td><%=thing.score%></td>  
+                <td><form action="/delete/people" method="post" ><button type="submit" name="delete" value="<%=thing.id%>" class="btn btn-danger" style="margin-left:45%;">DELETE</button>
+                  </form></td>
+                </tr>
+            </tbody>
+          <%})%>
+      </table>
+
+
+
+
+<%-include("footer")-%>
