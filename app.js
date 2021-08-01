@@ -244,6 +244,8 @@ else{
 }
 })
 
+
+
 app.post("/delete/people",function(req, res){
   var delID=req.body.delete
   User.findOneAndUpdate({_id:req.user.id},{$pull:{player:{_id:delID}}},function(err,result){

@@ -117,24 +117,6 @@ li{
     </div>
     </div>
 
-  <script>
-    function countDown(sec, elem,thing) {
-  var intervalId = undefined;
-  var intervalId = setInterval(function(){ 
-    var element = document.getElementById(elem);
-    element.innerHTML = "Time left: " + Math.round(sec/60) + " minutes and "+sec%60+ " seconds left until the next hint" ;
-    
-    if (sec < 1) {
-      clearInterval(intervalId);
-      element.innerHTML = thing
-    }
-
-    sec--;
-  }, 1000);
-  
-}
-countDown(18, "status",'<a href="<%=hint1%>" target="_blank" rel="noopener noreferrer">hint</a><div id="nest"></div>');
-countDown(18, "nest",'<a href="<%=hint2%>" target="_blank" rel="noopener noreferrer">hint</a>');
-  </script>
+ 
 
 <%-include("footer")-%>
