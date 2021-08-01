@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 var session = require('express-session')
 var passport = require("passport");
 var passportLocalMongoose = require("passport-local-mongoose");
-mongoose.connect("mongodb://localhost:27017/questionDB", { useUnifiedTopology: true , useNewUrlParser: true, useFindAndModify: false  }) //mongoose connecting
+mongoose.connect("mongodb+srv://adminRohan:test@cluster0.lmuy0.mongodb.net/questionDB", { useUnifiedTopology: true , useNewUrlParser: true, useFindAndModify: false  }) //mongoose connecting
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set('views', './views');
@@ -258,7 +258,10 @@ app.post("/delete/people",function(req, res){
 app.use(function(req,res){
   res.status(404).render('what');
 });
-
-app.listen(3000, function(){
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+app.listen(port, function(){
     console.log("listening")
 })
