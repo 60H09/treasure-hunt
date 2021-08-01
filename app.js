@@ -138,8 +138,8 @@ app.post("/delete",function(req, res){
 
 var feedback=-1
     app.get("/play/:gameid/:playerName",function(req, res){
-    User.findById(req.params.gameid,function(err,result){
-      for(var i=0;i<result.player.length;i++){
+      User.findOne({username:req.params.gameid},function(err,result){
+        for(var i=0;i<result.player.length;i++){
        if (result.player[i].name==req.params.playerName){
         var score = result.player[i].score
         var results = result.question
@@ -155,13 +155,13 @@ var feedback=-1
     })
 })
     app.post("/play/:gameid/:playerName",function(req, res){
-        User.findById(req.params.gameid,function(err,result){
+      User.findOne({username:req.params.gameid},function(err,result){
           for(var i=0;i<result.player.length;i++){
             if (result.player[i].name==req.params.playerName){
               var score = result.player[i].score
               const str = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
               var results = result.question
-              if(req.body.answer===results[score].answer){
+              if(_.lowerCase(req.body.answer)===_.lowerCase(results[score].answer)){
                   feedback =1
                   score+=1
                   result.player[i].time = str
@@ -194,7 +194,7 @@ app.post("/",function(req,res){
         res.render("vali",{message :"Game not found",link:"/"},)
       }
       else{
-       let adminID=found.id
+       let adminID=found.username
        res.redirect("/register/"+adminID)}
     })
 })
@@ -206,7 +206,7 @@ app.post("/register/:gameid",function(req,res){
   var status = 1;
   const str = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
   const player = new Player({name:req.body.playerName,time:str})
-  User.findById(req.params.gameid,function(err,result){
+  User.findOne({username:req.params.gameid},function(err,result){
       for(var i=0;i<result.player.length;i++){
         if(result.player[i].name==req.body.playerName){
           status=0;
@@ -260,7 +260,7 @@ app.use(function(req,res){
 });
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 8000;
+  port = 3000;
 }
 app.listen(port, function(){
     console.log("listening")
