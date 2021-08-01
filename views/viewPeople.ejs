@@ -74,9 +74,11 @@ li{
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Name</th>
+            <th scope="col">Current Points</th>
+            <th scope="col">No of attempts</th>
+            <th scope="col">time</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
         <%things.forEach(function(thing,index){ %>
@@ -84,7 +86,12 @@ li{
                 <tr>
                   <th scope="row"><%=index+1%></th>
                   <td><%=thing.name%></td>
-                  <td><%=thing.score%></td>  
+                  <td><%=thing.score%></td> 
+                  <td><%=thing.attempts%></td>
+                  <td><%=thing.time%></td>
+                  <% if (thing.score==length) { %>
+                    <td>Completed💎</td>
+                      <%} %>   
                 <td><form action="/delete/people" method="post" ><button type="submit" name="delete" value="<%=thing.id%>" class="btn btn-danger" style="margin-left:45%;">DELETE</button>
                   </form></td>
                 </tr>

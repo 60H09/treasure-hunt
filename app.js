@@ -23,7 +23,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session())
 
-const playerSchema = new mongoose.Schema({name:String,score:{type:Number,default:0}})
+const playerSchema = new mongoose.Schema({name:String,score:{type:Number,default:0},attempts:{type:Number,default:0},time:String})
 const Player = mongoose.model('Player', playerSchema)
 
 const questionSchema =new mongoose.Schema({text:String,photo:String,answer:String,format:String,hint1:{type:String,default:"/nohint"},hint2:String})
@@ -147,7 +147,7 @@ var feedback=-1
           res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid,name:result.username,playerName:req.params.playerName})
         }
         else{
-            res.render("vali",{message:"Congrats Claim your treasure",link:"/treasure"})
+          res.render("treasure")
         }
       }
       }
@@ -159,17 +159,21 @@ var feedback=-1
           for(var i=0;i<result.player.length;i++){
             if (result.player[i].name==req.params.playerName){
               var score = result.player[i].score
-              console.log(score)
+              const str = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
               var results = result.question
               if(req.body.answer===results[score].answer){
                   feedback =1
                   score+=1
+                  result.player[i].time = str
                   result.player[i].score=score
+                  result.player[i].attempts+=1
                   result.save()
                   res.redirect("/play/"+req.params.gameid+"/"+req.params.playerName)     
              }
           
               else{
+                  result.player[i].attempts+=1
+                  result.save()
                   feedback =0
                   res.redirect("/play/"+req.params.gameid+"/"+req.params.playerName)     
           }
@@ -200,7 +204,8 @@ app.get("/register/:gameid",function(req,res){
 })
 app.post("/register/:gameid",function(req,res){
   var status = 1;
-  const player = new Player({name:req.body.playerName})
+  const str = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  const player = new Player({name:req.body.playerName,time:str})
   User.findById(req.params.gameid,function(err,result){
       for(var i=0;i<result.player.length;i++){
         if(result.player[i].name==req.body.playerName){
@@ -221,9 +226,7 @@ app.post("/register/:gameid",function(req,res){
 app.get("/nohint",function(req, res){
     res.render("nohint")
 })
-app.get("/treasure",function(req, res){
-    res.render("treasure")
-})
+
 
 app.get("/logout", function(req, res){
     req.logout();
@@ -233,7 +236,7 @@ app.get("/logout", function(req, res){
 app.get("/view-people",function(req, res){
   if(req.isAuthenticated()){
   User.findOne({_id:req.user.id},function(err,found){
-    res.render("viewPeople",{things:found.player,name:req.user.username,gameid:req.user.id})
+    res.render("viewPeople",{things:found.player,name:req.user.username,gameid:req.user.id,length:found.question.length})
     })
 }
 else{
