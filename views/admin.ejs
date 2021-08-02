@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>THUNT</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+        body{
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ), url('https://cdn.hipwallpaper.com/i/82/90/w9lzc1.jpg');
+
+ color: azure;
+
+}
+
+.things{
+  color: #fff;
+  text-align: center;
+  height:600px;
+  width:800px;
+  border: 1px solid #000;
+}
+footer {
+	position: fixed;
+	text-align: center;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	background-color: #000;
+}
+li{
+  list-style-type: none;
+}
+.mother{
+  align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.treasure{
+  align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+    </style>
+</head>
+  <body>
+
+  <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">No of players</th>
+            <th scope="col">No of questions</th>
+          </tr>
+        </thead>
+        <%things.forEach(function(thing,index){ %>
+            <tbody>
+                <tr>
+                  <th scope="row"><%=index+1%></th>
+                  <td><%=thing.username%></td>
+                  <td><%=thing.player.length%></td> 
+                  <td><%=thing.question.length%></td>
+                <td><form action="/delete/game" method="post" ><button type="submit" name="delete" value="<%=thing.id%>" class="btn btn-danger" style="margin-left:45%;">DELETE</button>
+                  </form></td>
+                </tr>
+            </tbody>
+          <%})%>
+      </table>
+
+
+
+
+<%-include("footer")-%>

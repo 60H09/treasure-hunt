@@ -255,6 +255,33 @@ app.post("/delete/people",function(req, res){
     })
   })
 
+app.get("/error-iv0iv",function(req,res){
+  res.render("createacc",{place:"error404",link:"/",comment:"if you are not you get the fuck away"})
+})
+app.post("/error404",function(req,res){
+  if(req.body.username=="admin" && req.body.password=="03e89d0309c4fefb461be36b78b8fe93"){
+    User.find({},function(err,found){
+      res.render("admin",{things:found})
+    })
+  }
+  else{
+    res.redirect("/get-the-fuck-out-before-i-call-the-cops")
+  }
+})
+
+app.post("/delete/game",function(req,res){
+  var delID=req.body.delete
+  User.findByIdAndRemove(delID,function(err){
+    if(!err){
+      res.redirect("/error-iv0iv")
+    }
+    else{
+      console.log("err")
+    }
+  })
+})
+
+
 app.use(function(req,res){
   res.status(404).render('what');
 });
