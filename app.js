@@ -23,7 +23,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session())
 
-const playerSchema = new mongoose.Schema({name:String,score:{type:Number,default:0},attempts:{type:Number,default:0},time:String})
+const playerSchema = new mongoose.Schema({name:String,score:{type:Number,default:0},email:String,attempts:{type:Number,default:0},time:String})
 const Player = mongoose.model('Player', playerSchema)
 
 const questionSchema =new mongoose.Schema({text:String,photo:String,answer:String,format:String,hint1:{type:String,default:"/nohint"},hint2:String})
@@ -205,20 +205,42 @@ app.get("/register/:gameid",function(req,res){
 app.post("/register/:gameid",function(req,res){
   var status = 1;
   const str = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
-  const player = new Player({name:req.body.playerName,time:str})
+  const player = new Player({name:req.body.playerName,email:req.body.playerEmail,time:str})
   User.findOne({username:req.params.gameid},function(err,result){
       for(var i=0;i<result.player.length;i++){
-        if(result.player[i].name==req.body.playerName){
-          status=0;
+        if(result.player[i].email==req.body.playerEmail){
+          if(result.player[i].name==req.body.playerName){
+            status=2
+        }
+        else{
+          console.log("email exist but has logged in once")
+          status=-1
         }
       }
-      if(status===1){
+      else{
+        if(result.player[i].name==req.body.playerName){
+        status = -2
+        }
+        else{
+      status =1 
+        }
+      }
+    }
+
+    if(status===1){
       result.player.push(player)
       result.save()
-      res.redirect("/play/"+req.params.gameid+"/"+req.body.playerName)      }
-      else{
-        res.render("vali",{message:"that name exists try a diffrent one",link:"/register/"+req.params.gameid})
-      }
+      res.redirect("/play/"+req.params.gameid+"/"+req.body.playerName)   
+       }
+     else if(status===2){
+      res.redirect("/play/"+req.params.gameid+"/"+req.body.playerName)   
+     } 
+     else if(status===-1){
+       res.render("vali",{message:"email id exists",link:"/register/"+req.params.gameid})
+     }
+     else{
+       res.render("vali",{message:"that name exists try a diffrent one",link:"/register/"+req.params.gameid})
+     }
        
   })
 })
