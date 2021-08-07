@@ -99,7 +99,7 @@ app.get("/add/",function(req, res){
         res.render("add",{name:req.user.username,gameid:req.user.id})
     }
     else{
-      res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
+      res.render("createacc",{place:"login",comment:"Don't have an account??",link:"/create-new-account"})
     }
     
 })
