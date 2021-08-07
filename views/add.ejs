@@ -7,10 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <style>
         body{
-  background-image: linear-gradient(
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)
-  ), url('https://cdn.hipwallpaper.com/i/82/90/w9lzc1.jpg');
+          background-color: #53354A;
+
 
  color: azure;
 
@@ -21,7 +19,6 @@
   text-align: center;
   height:600px;
   width:800px;
-  border: 1px solid #000;
 }
 footer {
 	position: fixed;
@@ -45,11 +42,17 @@ li{
     display: flex;
     justify-content: center;
 }
-
+input{
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+.nav-item{
+  margin-left: 10px;
+}
     </style>
 </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#2B2E4A;">
       <a class="navbar-brand" href="/">THUNT</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -75,20 +78,22 @@ li{
     </nav>
 <div class="mother">
     <div class="things">
-      <div class="inside">
+      <div class="inside" style="margin-top: 8rem;">
       <form action="/add" method="post">
         <li>
           <table align="center">
         <tr><ul><td><label for="">question</label></td><td><input type="text" name="text"></td></ul></tr> 
         <tr><ul><td><label for="">link    </label></td><td><input type="text" name="photo"></td></ul></tr>
         <tr><ul><td><label for="">answer  </label></td><td><input type="text" name="answer"></td></ul></tr>
-      </table>
         <form action="">
-          <ul><label for="age1">video</label><input type="radio" id="age1" name="age" value="1"></ul>
-          <ul><label for="age2">image</label><input type="radio" id="age2" name="age" value="0"></ul>
-          <ul><label for="age3">link</label><input type="radio" id="age3" name="age" value="2"></ul>
+          
+      </table>
+      <tr><td><ul><label for="age1">video</label><input type="radio" id="age1" name="age" value="1"></ul></td></tr>
+      <tr><td><ul><label for="age2">image</label><input type="radio" id="age2" name="age" value="0"></ul></td></tr>
+      <tr><td><ul><label for="age3">link</label><input type="radio" id="age3" name="age" value="2"></ul></td></tr>
+          
           <ul><button type="submit" >add</button></ul>
-
+        
           <p>if you have google drive link generate a link by clicking <a href="https://www.wonderplugin.com/online-tools/google-drive-direct-link-generator/" target="_blank" rel="noopener noreferrer">here</a> </p>
 
       </form>

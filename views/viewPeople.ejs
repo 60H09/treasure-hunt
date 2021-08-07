@@ -7,10 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <style>
         body{
-  background-image: linear-gradient(
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.5)
-  ), url('https://cdn.hipwallpaper.com/i/82/90/w9lzc1.jpg');
+          background-color: #53354A;
+
 
  color: azure;
 
@@ -21,7 +19,6 @@
   text-align: center;
   height:600px;
   width:800px;
-  border: 1px solid #000;
 }
 footer {
 	position: fixed;
@@ -44,11 +41,13 @@ li{
     display: flex;
     justify-content: center;
 }
-
+.nav-item{
+  margin-left: 10px;
+}
     </style>
 </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#2B2E4A;">
       <a class="navbar-brand" href="/">THUNT</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -93,8 +92,10 @@ li{
                   <td><%=thing.time%></td>
                   <% if (thing.score==length) { %>
                     <td>Completed💎</td>
-                      <%} %>   
-                <td><form action="/delete/people" method="post" ><button type="submit" name="delete" value="<%=thing.id%>" class="btn btn-danger" style="margin-left:45%;">DELETE</button>
+                      <%} else{ %>  
+                        <td>Playing</td> 
+                        <%} %>    
+                <td><form action="/delete/people" method="post" ><button type="submit" name="delete" value="<%=thing.id%>" class="btn btn-danger" style="margin-left:18%;">DELETE</button>
                   </form></td>
                 </tr>
             </tbody>
