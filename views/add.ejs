@@ -98,7 +98,7 @@ input{
       <tr><td><ul><label for="age2">image</label><input type="radio" id="age2" name="age" value="0"></ul></td></tr>
       <tr><td><ul><label for="age3">link</label><input type="radio" id="age3" name="age" value="2"></ul></td></tr>
           
-          <ul><button type="submit" >add</button></ul>
+          <ul><button type="submit" class="btn btn-primary">add</button></ul>
         
 
          
@@ -107,8 +107,9 @@ input{
       </form>
       </form>
       <div>
-        <input type="text" id="txtName"/>
-        <input type="button" id = "btnCopy" value="Generate Link" onclick = "CopyToLabel()" />
+        <label for="">If you have a google drive link</label>
+        <input type="text" id="txtName" style="width: 380px;"/>
+        <input type="button" id = "btnCopy" value="Generate Link" onclick = "CopyToLabel()" class = "btn btn-primary"/>
         <hr />
         <label id = "lblName"></label>
       </div>
