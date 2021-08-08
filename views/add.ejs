@@ -102,11 +102,31 @@ input{
         
           <p>if you have google drive link generate a link by clicking <a href="https://www.wonderplugin.com/online-tools/google-drive-direct-link-generator/" target="_blank" rel="noopener noreferrer">here</a> </p>
 
+         
+
+
       </form>
       </form>
+      <div>
+        <input type="text" id="txtName"/>
+        <input type="button" id = "btnCopy" value="Generate Link" onclick = "CopyToLabel()" />
+        <hr />
+        <label id = "lblName"></label>
+      </div>
       </li>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  function CopyToLabel() {
+      //Reference the TextBox.
+      var txtName = document.getElementById("txtName");
 
+      //Reference the Label.
+      var lblName = document.getElementById("lblName");
+
+      //Copy the TextBox value to Label.
+      lblName.innerHTML ="https://docs.google.com/uc?id="+txtName.value.slice(32,txtName.value.length-17);
+  }
+</script>
 </body>

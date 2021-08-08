@@ -213,7 +213,6 @@ app.post("/register/:gameid",function(req,res){
             status=2
         }
         else{
-          console.log("email exist but has logged in once")
           status=-1
         }
       }
@@ -302,7 +301,6 @@ app.post("/delete/game",function(req,res){
     }
   })
 })
-
 
 app.use(function(req,res){
   res.status(404).render('what');
