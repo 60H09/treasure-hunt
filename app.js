@@ -94,6 +94,7 @@ app.post("/login", function(req, res){
   
   });
 
+
 app.get("/add/",function(req, res){
     if(req.isAuthenticated()){
         res.render("add",{name:req.user.username,gameid:req.user.id})
@@ -135,16 +136,21 @@ app.post("/delete",function(req, res){
       })
     })
 
+var victory =["You've cracked it!!","You did it!!","congrats dude!!","Great Job!!","Seems like you are winning!!","right on!!","Question Slayer","I hear your roar","You are god damn right","You're a little scary sometimes, you know that? Brilliant ... but scary.","Rejoice You have cracked it!!" ]
+var lost = ["try ,fail ,try harder","Come on you can do it","Don't ever give up","Think about your ninja way","Edison failed 1000 times","fail until you beat faliure","Keep trying!!","When in doubt, go to the library.",] 
+    
 
 var feedback=-1
     app.get("/play/:gameid/:playerName",function(req, res){
+      var victoryNumber = Math.floor(Math.random() * victory.length)
+      var lostNumber = Math.floor(Math.random() * lost.length)
       User.findOne({username:req.params.gameid},function(err,result){
         for(var i=0;i<result.player.length;i++){
        if (result.player[i].name==req.params.playerName){
         var score = result.player[i].score
         var results = result.question
         if(score!=results.length){
-          res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid,name:result.username,playerName:req.params.playerName})
+          res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid,name:result.username,playerName:req.params.playerName,victory:victory[victoryNumber],lost:lost[lostNumber]})
         }
         else{
           res.render("treasure")
@@ -213,6 +219,7 @@ app.post("/register/:gameid",function(req,res){
             status=2
         }
         else{
+          console.log("email exist but has logged in once")
           status=-1
         }
       }
@@ -225,13 +232,14 @@ app.post("/register/:gameid",function(req,res){
         }
       }
     }
-
     if(status===1){
+      console.log("new player")
       result.player.push(player)
       result.save()
       res.redirect("/play/"+req.params.gameid+"/"+req.body.playerName)   
-       }
+      }
      else if(status===2){
+      console.log("existing player")
       res.redirect("/play/"+req.params.gameid+"/"+req.body.playerName)   
      } 
      else if(status===-1){
@@ -243,7 +251,6 @@ app.post("/register/:gameid",function(req,res){
        
   })
 })
-
 app.get("/nohint",function(req, res){
     res.render("nohint")
 })
