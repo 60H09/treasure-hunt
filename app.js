@@ -14,7 +14,7 @@ app.set('views', './views');
 app.set('view engine', 'ejs')
 
 app.use(session({
-    secret: 'Secretoski',
+    secret:'process.env.key',
     resave:false,
     saveUninitialized:false
 }))
@@ -23,7 +23,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session())
 
-const playerSchema = new mongoose.Schema({name:String,score:{type:Number,default:0},email:String,attempts:{type:Number,default:0},time:String})
+const playerSchema = new mongoose.Schema({name:String,score:{type:Number,default:0},email:String,attempts:{type:Number,default:0},time:String,comment:String})
 const Player = mongoose.model('Player', playerSchema)
 
 const questionSchema =new mongoose.Schema({text:String,photo:String,answer:String,format:String,hint1:{type:String,default:"/nohint"},hint2:String})
@@ -114,6 +114,32 @@ app.post("/add",function(req, res){
     })
 })
 
+app.get("/play/:gameid/:playerName/comments",function(req,res){
+  res.render("comments",{playername:req.params.playerName,gameid:req.params.gameid})
+})
+app.post("/play/:gameid/:playerName/comments",function(req,res){
+  User.findOne({username:req.params.gameid},function(err,found){
+     for(var i = 0;i<found.player.length;i++){
+       if(found.player[i].name === req.params.playerName){
+         found.player[i].comment = req.body.comment;
+         found.save()
+         res.redirect("/")
+       }
+     }
+  })
+})
+
+app.get("/view-comments",function(req, res){
+  if(req.isAuthenticated()){
+  User.findOne({_id:req.user.id},function(err,found){
+      res.render("readcomments",{things:found.player})
+  })
+}
+else{
+res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
+}
+})
+
 app.get("/add/view",function(req, res){
     if(req.isAuthenticated()){
     User.findOne({_id:req.user.id},function(err,found){
@@ -124,7 +150,6 @@ else{
   res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
 }
 })
-
 
 
 app.post("/delete",function(req, res){
@@ -142,6 +167,7 @@ var lost = ["try ,fail ,try harder","Come on you can do it","Don't ever give up"
 
 var feedback=-1
     app.get("/play/:gameid/:playerName",function(req, res){
+      var commentlink = "/play/"+req.params.gameid+"/"+req.params.playerName+"/comments";
       var victoryNumber = Math.floor(Math.random() * victory.length)
       var lostNumber = Math.floor(Math.random() * lost.length)
       User.findOne({username:req.params.gameid},function(err,result){
@@ -153,7 +179,7 @@ var feedback=-1
           res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid,name:result.username,playerName:req.params.playerName,victory:victory[victoryNumber],lost:lost[lostNumber]})
         }
         else{
-          res.render("treasure")
+          res.render("treasure",{commentlink:commentlink})
         }
       }
       }
