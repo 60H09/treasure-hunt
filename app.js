@@ -10,7 +10,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 mongoose.connect("mongodb+srv://adminRohan:test@cluster0.lmuy0.mongodb.net/questionDB", { useUnifiedTopology: true , useNewUrlParser: true, useFindAndModify: false  }) //mongoose connecting
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-app.set('views', './views');
+//app.set('views', '/views');
 app.set('view engine', 'ejs')
 
 app.use(session({
