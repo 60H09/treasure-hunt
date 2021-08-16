@@ -5,15 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>treasure</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
-        body{
-        background-image:url("https://www.malayalamplainmemes.download/images/vietnam-colony-sankaradi-kymdi/full");
-        background-repeat: no-repeat;
-        background-size: cover;
-        }   
+       body {
+    background-image: url('https://cutewallpaper.org/21/young-leonardo-dicaprio-wallpaper/Leonardo-dicaprio-Wallpapers-Free-by-ZEDGE_tm_.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: azure;
+   }    
+
+
+@media (min-width: 1024px) {
+    body {
+      background-image: url("https://www.malayalamplainmemes.download/images/vietnam-colony-sankaradi-kymdi/full");
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: azure;
+   }
+} 
+     
         .hand{
-            margin-left: 690px;
-            margin-top: 198px;
+            margin-left: 183px;
+            margin-top: 490px;
             border-radius:100%;
             padding:10px 10px 0 0;
             text-decoration: none;
@@ -22,16 +35,44 @@
             transition: all 0.2s ease-in-out;
 
         }
+        @media (min-width: 1024px) {
+            .hand{
+            margin-left: 60rem;
+            margin-top: 17rem;
+            border-radius:100%;
+            padding:10px 10px 0 0;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgb(145, 92, 182);
+            transition: all 0.2s ease-in-out;
+
+        }
+} 
         .hand:hover{
            background:blue;
         }
+        
+        .comment{
+            margin-top: 5px;
+            margin-left: -179px;
+        }
+        @media (min-width: 1024px) {
+        .comment{
+        position:fixed; 
+        margin-top:94px; 
+        margin-left:300px;
+        }
+
+        }
+    
+
         </style>
 
 </head>
 <body>
-    <button class="hand"  onclick="function hi(){alert('HiFive aa rekha ente kayyil und pakshe ningl jayichathinte rekha ilaa ath adminod choikk adminodu choikku! anyway \n\nI have fought the good fight, I have finished the race, I have kept the faith that I will win.\n 2 Timothy 4:7(a bit modified) \n anyway kudos❤️✨🎊')};hi()"></button>
+    <button class="hand"  onclick="function hi(){alert('HiFive or cheers whatever \n aa rekha ente kayyil und pakshe ningl jayichathinte rekha ilaa ath adminod choikk adminodu choikku! anyway \n\nI have fought the good fight, I have finished the race, I have kept the faith that I will win.\n 2 Timothy 4:7(a bit modified) \n anyway kudos❤️✨🎊')};hi()"></button>
 <div style="height:20px; margin-top: 278px;margin-left: 368px; " >
-   <a href="<%=commentlink%>" style="text-decoration: none" target="_blank">If you have any comments feel free to post it </a>
+   <button onclick="window.location.href='<%=commentlink%>'" class="btn btn-primary comment">Drop your comments here</button>
 </div>
 </body>
 </html>
