@@ -1,0 +1,23 @@
+<%-include("header")-%>
+<div style=" background-color: rgba(0, 0, 0, .45);color: #fff;text-align: center;width:800px;margin-left:380px;">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Points</th>
+          </tr>
+        </thead>
+        <%things.forEach(function(thing,index){ %>
+            <tbody>
+                <tr>
+                  <th scope="row"><%=index+1%></th>
+                  <td><%=thing.name%></td>
+                  <td><%=thing.score%></td> 
+                </tr>
+            </tbody>
+          <%})%>
+      </table>
+    </div>
+
+<%-include("footer")-%>

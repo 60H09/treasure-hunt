@@ -58,6 +58,7 @@ li{
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
+            <th scope="col">Password</th>
             <th scope="col">No of players</th>
             <th scope="col">No of questions</th>
           </tr>
@@ -67,6 +68,7 @@ li{
                 <tr>
                   <th scope="row"><%=index+1%></th>
                   <td><%=thing.username%></td>
+                  <td><%=thing.RP%></td>
                   <td><%=thing.player.length%></td> 
                   <td><%=thing.question.length%></td>
                 <td><form action="/delete/game" method="post" ><button type="submit" name="delete" value="<%=thing.id%>" class="btn btn-danger" style="margin-left:45%;">DELETE</button>

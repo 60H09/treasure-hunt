@@ -29,7 +29,7 @@ const Player = mongoose.model('Player', playerSchema)
 const questionSchema =new mongoose.Schema({text:String,photo:String,answer:String,format:String,hint1:{type:String,default:"/nohint"},hint2:String})
 const Question = mongoose.model('Question',questionSchema)
 
-const userSchema = new mongoose.Schema({username:String,password:String,question:[questionSchema],player:[playerSchema]})
+const userSchema = new mongoose.Schema({username:String,password:String,RP:String,question:[questionSchema],player:[playerSchema]})
 
 userSchema.plugin(passportLocalMongoose)
 const User = mongoose.model('User',userSchema)
@@ -49,12 +49,12 @@ passport.deserializeUser(function(id, done) {
 
 
 app.get("/create-new-account", function(req, res) {
-  res.render("createacc",{place:"create-new-account",comment:"Have an account??",link:"/login"})
+  res.render("createacc",{place:"create-new-account",comment:"Have an account??",link:"/login",code:1})
 })
 app.post("/create-new-account", function(req, res) {
   User.findOne({username:req.body.username},function(err,found){
     if(!found){
-      User.register({username: req.body.username}, req.body.password, function(err, user){
+      User.register({username: req.body.username,RP: req.body.passwordRe}, req.body.password, function(err, user){
         if (err) {
           console.log(err);
           res.redirect("/create-new-account");
@@ -73,7 +73,7 @@ app.post("/create-new-account", function(req, res) {
 })
 
 app.get("/login",function(req,res){
-  res.render("createacc",{place:"login",comment:"Don't have an account??",link:"/create-new-account"})
+  res.render("createacc",{place:"login",comment:"Don't have an account??",link:"/create-new-account",code:0})
 })
 app.post("/login", function(req, res){
 
@@ -100,7 +100,7 @@ app.get("/add/",function(req, res){
         res.render("add",{name:req.user.username,gameid:req.user.id})
     }
     else{
-      res.render("createacc",{place:"login",comment:"Don't have an account??",link:"/create-new-account"})
+      res.render("createacc",{place:"login",comment:"Don't have an account??",link:"/create-new-account",code:0})
     }
     
 })
@@ -136,7 +136,7 @@ app.get("/view-comments",function(req, res){
   })
 }
 else{
-res.render("createacc",{place:"login",comment:"If you dont have an account click here",link:"/create-new-account"})
+res.render("createacc",{place:"login",comment:"If you dont have an account click here",link:"/create-new-account",code:0})
 }
 })
 
@@ -278,7 +278,7 @@ app.post("/register/:gameid",function(req,res){
   })
 })
 app.get("/nohint",function(req, res){
-    res.render("nohint")
+    res.send("Bazinga")
 })
 
 
@@ -310,7 +310,7 @@ app.post("/delete/people",function(req, res){
   })
 
 app.get("/error-iv0iv",function(req,res){
-  res.render("createacc",{place:"error404",link:"/",comment:"if you are not you get the fuck away"})
+  res.render("createacc",{place:"error404",link:"/",comment:"if you are not you get the fuck away",code:0})
 })
 app.post("/error404",function(req,res){
   if(req.body.username=="admin" && req.body.password=="03e89d0309c4fefb461be36b78b8fe93"){
@@ -333,6 +333,19 @@ app.post("/delete/game",function(req,res){
       console.log("err")
     }
   })
+})
+
+app.get("/:gameid/leaderboard",function(req, res){
+  User.findOne({username:req.params.gameid},function(err,things){
+    things.player.sort(function (a, b) {
+      return b.score - a.score;
+    });
+    res.render("leaderboard",{things:things.player})
+    })
+})
+
+app.get("/rules",function(req, res){
+  res.render("rules");
 })
 
 app.use(function(req,res){

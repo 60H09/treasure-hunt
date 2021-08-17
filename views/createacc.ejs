@@ -6,7 +6,10 @@
 <form action="/<%=place%>" method="post">
 <li>
     <ul><label for="">username</label><input type="text" name="username" style="margin-right:5px; margin-left:7px; margin-top: 15px;"></ul>
-    <ul><label for="">password</label><input type="password" name="password"style="margin-right:5px; margin-left:7px;  margin-top: 15px;"></ul>
+    <ul><label for="">password</label><input type="password" name="password"style="margin-right:5px; margin-left:7px;  margin-top: 15px;" required="required"></ul>
+    <%if (code === 1){%>   
+    <ul><label for="">Renter pw</label><input type="password" name="passwordRe"style="margin-right:5px; margin-left:7px;  margin-top: 15px;" required="required"></ul>
+    <%}%>
     <ul><button type="submit" style="margin-top: 10px;" class="btn btn-primary">enter</button></ul>
 </li>
  <a href="<%=link%>"><%=comment%></a>
