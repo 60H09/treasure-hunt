@@ -136,7 +136,7 @@ app.get("/view-comments",function(req, res){
   })
 }
 else{
-res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
+res.render("createacc",{place:"login",comment:"If you dont have an account click here",link:"/create-new-account"})
 }
 })
 
