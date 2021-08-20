@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 var session = require('express-session')
 var passport = require("passport");
 var passportLocalMongoose = require("passport-local-mongoose");
-mongoose.connect("mongodb+srv://adminRohan:test@cluster0.lmuy0.mongodb.net/questionDB", { useUnifiedTopology: true , useNewUrlParser: true, useFindAndModify: false  }) //mongoose connecting
+mongoose.connect("mongodb+srv://adminRohan:test@cluster0.lmuy0.mongodb.net/questionDB", { useUnifiedTopology: true , useNewUrlParser: true, useFindAndModify: false,useCreateIndex: true  }) //mongoose connecting
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 //app.set('views', '/views');
@@ -22,7 +22,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session())
-
 const playerSchema = new mongoose.Schema({name:String,score:{type:Number,default:0},email:String,attempts:{type:Number,default:0},time:String,comment:String})
 const Player = mongoose.model('Player', playerSchema)
 
@@ -147,7 +146,7 @@ app.get("/add/view",function(req, res){
     })
 }
 else{
-  res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
+  res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account",code:0})
 }
 })
 
@@ -259,13 +258,17 @@ app.post("/register/:gameid",function(req,res){
       }
     }
     if(status===1){
-      console.log("new player")
       result.player.push(player)
-      result.save()
-      res.redirect("/play/"+req.params.gameid+"/"+req.body.playerName)   
+      result.save(function(err){
+        if(!err){
+          res.redirect("/play/"+req.params.gameid+"/"+req.body.playerName)   
+        }
+        else{
+          res.render("vali",{message:"something went wrong try a diffrent name",link:"/register/"+req.params.gameid}) 
+        }
+      })
       }
      else if(status===2){
-      console.log("existing player")
       res.redirect("/play/"+req.params.gameid+"/"+req.body.playerName)   
      } 
      else if(status===-1){
@@ -294,7 +297,7 @@ app.get("/view-people",function(req, res){
     })
 }
 else{
-  res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account"})
+  res.render("createacc",{place:"login",comment:"hey",link:"/create-new-account",code:0})
 }
 })
 
