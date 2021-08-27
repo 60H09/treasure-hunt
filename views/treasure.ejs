@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
        body {
-    background-image: url('library/leomobile.jpg');
+    background-image: url('https://cutewallpaper.org/21/young-leonardo-dicaprio-wallpaper/Leonardo-dicaprio-Wallpapers-Free-by-ZEDGE_tm_.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     color: azure;
@@ -17,8 +17,7 @@
 
 @media (min-width: 1024px) {
     body {
-      background-image: url("library/leo.jpg");
-    background-repeat: no-repeat;
+    background-image: url("https://i.pinimg.com/originals/c6/12/ca/c612ca1172b567ce209f0960c3f92110.jpg");
     color: azure;
    }
 } 
@@ -37,7 +36,7 @@
         @media (min-width: 1024px) {
             .hand{
             margin-left: 36rem;
-            margin-top: 25rem;
+            margin-top: 28rem;
             border-radius:100%;
             padding:10px 10px 0 0;
             text-decoration: none;
@@ -51,27 +50,23 @@
            background:blue;
         }
         
-        .comment{
-            margin-top: 5px;
-            margin-left: -199px;
-        }
-        @media (min-width: 1024px) {
-        .comment{
-        position:fixed; 
-        margin-top:-39px; 
-        margin-left:300px;
-        }
-
-        }
-    
-
         </style>
 
 </head>
 <body>
-    <button class="hand"  onclick="function hi(){alert('cheers dude \nYou have found the treasure\n\nI have fought the good fight, I have finished the race, I have kept the faith that I will win.\n 2 Timothy 4:7(a bit modified) \n\n\n anyway kudos❤️✨🎊')};hi()"></button>
+<section>
+    <button class="hand"  onclick="function hi(){alert('cheers dude \nYou have found the treasure\n\nI have fought the good fight, I have finished the race, I have kept the faith that I will win.\n 2 Timothy 4:7(a bit modified) \n\n\n anyway kudos❤️✨🎊')};hi(); window.location.href='#comments' "></button>
 <div style="height:20px; margin-top: 278px;margin-left: 368px; " >
-   <button onclick="window.location.href='<%=commentlink%>'" class="btn btn-primary comment">Any Comments??</button>
 </div>
+</section>
+<section style="background-color: #11052C;text-align: center; padding: 3% 0 3%; height :50px" id="comments">
+    <div class="mother">
+        <form action="/play/<%=gameid%>/<%=playername%>/comments" method="post">
+            <input type="text" name="comment" style="width: 380px;" placeholder="feedback here"/>
+            <button class="btn btn-primary">Add</button>
+        </form>
+        
+        </div>
+</section>
 </body>
 </html>

@@ -178,7 +178,7 @@ var feedback=-1
           res.render("index",{text:results[score].text,photo:results[score].photo,format:results[score].format,feedback:feedback,hint1:results[score].hint1,hint2:results[score].hint2,id:req.params.gameid,name:result.username,playerName:req.params.playerName,victory:victory[victoryNumber],lost:lost[lostNumber]})
         }
         else{
-          res.render("treasure",{commentlink:commentlink})
+          res.render("treasure",{commentlink:commentlink,playername:req.params.playerName,gameid:req.params.gameid})
         }
       }
       }
