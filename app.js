@@ -347,6 +347,7 @@ app.get("/:gameid/leaderboard",function(req, res){
     })
 })
 
+
 app.get("/rules",function(req, res){
   res.render("rules");
 })
