@@ -80,13 +80,13 @@ app.post("/login", function(req, res){
       username: req.body.username,
       password: req.body.password
     });
-  
+    
     req.login(user, function(err){
       if (err) {
         console.log(err);
       } else {
-        passport.authenticate("local")(req, res, function(){
-          res.redirect("/add");
+        passport.authenticate("local",{successRedirect:'/add',failureRedirect: '/add'})(req, res, function(){ //added something for unsuccessful login
+          res.redirect("/add/");  
         });
       }
     });
@@ -99,7 +99,7 @@ app.get("/add/",function(req, res){
         res.render("add",{name:req.user.username,gameid:req.user.id})
     }
     else{
-      res.render("createacc",{place:"login",comment:"Don't have an account??",link:"/create-new-account",code:0})
+      res.render("createacc",{place:"login",comment:"wrong password try again",link:"/create-new-account",code:0})
     }
     
 })
